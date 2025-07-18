@@ -1,0 +1,47 @@
+# Ignore Visual Studio build output directories
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Ignore user-specific files and directories
+*.user
+*.suo
+*.userosscache
+.vs/ # VS 2017 and later
+
+# Ignore NuGet packages (if not using Package Reference)
+packages/
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+*~
+
+# Ignore backup and report files
+Backup*/
+[Bb]uild[Ll]og.*
+
+# Other common ignore patterns
+*.ide/  # Roslyn cache directories
+[Tt]est[Rr]esult*/ # MSTest test Results
+
+# Optional: Ignore VS Code settings if you also use VS Code
+.vscode/
+
+# Optional: Ignore JetBrains Rider settings if you use Rider
+.idea/
+
+# Optional: Ignore Tye (tool for microservices) directories
+.tye/
+
+# macOS system files
+.DS_Store
+._*
+
+# Other files to ignore
+temp/
