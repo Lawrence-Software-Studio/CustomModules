@@ -9,7 +9,11 @@ namespace EntityComponentSystem {
 
         public void addComponent(Component component) {
             Type type = component.GetType();
-            Console.WriteLine(type);
+            _components.Add(type, component);
+        }
+		
+		public void addComponent<T>(Component component) {
+            Type type = typeof(T);
             _components.Add(type, component);
         }
 
