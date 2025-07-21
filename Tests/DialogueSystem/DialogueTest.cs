@@ -13,7 +13,8 @@ public class DialogueTest {
         DialogueNode nodeOne = new TextNode(1, 1, 2);
         DialogueNode nodeTwo = new QuestionNode(2, 2, [
             3, 4, 5
-    ]);
+        ]);
+
         DialogueNode nodeThree = new TextNode(3, 3, 6);
         DialogueNode nodeFour = new TextNode(4, 4, 6);
         DialogueNode nodeFive = new TextNode(5, 5, 6);
@@ -30,12 +31,14 @@ public class DialogueTest {
         dialogueManager.addNode(nodeFour);
         dialogueManager.addNode(nodeFive);
         dialogueManager.addNode(nodeSix);
-        dialogueManager.addText(one);
-        dialogueManager.addText(two);
-        dialogueManager.addText(three);
-        dialogueManager.addText(four);
-        dialogueManager.addText(five);
-        dialogueManager.addText(six);
+
+        TextRepository repository = new TextRepository();
+        repository.addText(one);
+        repository.addText(two);
+        repository.addText(three);
+        repository.addText(four);
+        repository.addText(five);
+        repository.addText(six);
 
 
         int current = 1;
@@ -43,16 +46,16 @@ public class DialogueTest {
             DialogueNode node = dialogueManager.getNode(current);
 
             if (node is TextNode t) {
-                Console.WriteLine(dialogueManager.getText(t.TextId));
+                Console.WriteLine(repository.getText(t.TextId));
                 current = t.NextNode;
             } else if (node is QuestionNode q) {
-                Console.WriteLine(dialogueManager.getText(q.TextId));
+                Console.WriteLine(repository.getText(q.TextId));
 
                 int choice = -1;
 
                 foreach (int i in q.Answers) {
                     TextNode answer = (TextNode)dialogueManager.getNode(i);
-                    Console.WriteLine(dialogueManager.getText(answer.TextId));
+                    Console.WriteLine(repository.getText(answer.TextId));
 
                     if (choice != -1) {
                         continue;
