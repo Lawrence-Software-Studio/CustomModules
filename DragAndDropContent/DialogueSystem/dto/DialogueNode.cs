@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 
 namespace DialogueSystem {
-    [JsonPolymorphic(TypeDiscriminatorPropertyName = "node")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "node_type")]
     [JsonDerivedType(typeof(TextNode), typeDiscriminator: "text")]
     [JsonDerivedType(typeof(QuestionNode), typeDiscriminator: "question")]
     public abstract class DialogueNode {
@@ -22,7 +22,7 @@ namespace DialogueSystem {
     public class TextNode : DialogueNode {
         [JsonInclude]
         [JsonPropertyName("next_node")]
-        public readonly int NextNode;
+        public readonly int NextNode; // Use -1 to terminate the dialogue chain
 
         public TextNode(int id, int text_id, int next_node) : base(id, text_id) {
             NextNode = next_node;

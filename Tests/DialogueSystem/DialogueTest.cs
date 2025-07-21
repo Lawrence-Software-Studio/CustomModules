@@ -63,5 +63,7 @@ public class DialogueTest {
                 current = choice;
             }
         }
+
+        Console.WriteLine(JsonSerializer.Serialize(dialogueManager));
     }
 }
