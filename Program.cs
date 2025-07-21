@@ -1,1 +1,2 @@
-﻿StateMachineTest.main();
+﻿// StateMachineTest.main();
+DialogueTest.main();
