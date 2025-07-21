@@ -35,10 +35,14 @@ namespace StateMachineSystem {
         }
 
         public void switchState(string nextState) {
-            _currentTransition = _transitions[nextState];
             _currentState.onExit();
+            _currentTransition.onExit();
+
             _currentState = _states[nextState];
+            _currentTransition = _transitions[nextState];
+
             _currentState.onEnter();
+            _currentTransition.onEnter();
         }
     }
 }

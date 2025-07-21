@@ -9,6 +9,8 @@ namespace StateMachineSystem {
         public abstract bool goToNextState();
         public abstract void update(double deltaTime);
         public abstract void fixedUpdate();
+        public abstract void onEnter();
+        public abstract void onExit();
     }
 
     public class PlaceholderTransition : TransitionComponent {
@@ -22,6 +24,12 @@ namespace StateMachineSystem {
 
         public override bool goToNextState() {
             return false;
+        }
+
+        public override void onEnter() {
+        }
+
+        public override void onExit() {
         }
 
         public override void update(double deltaTime) {

@@ -16,11 +16,17 @@ public class DelayTransition : TransitionComponent {
 
     public override bool goToNextState() {
         if (_elapsed >= _delay) {
-            _elapsed = 0;
             return true;
         }
 
         return false;
+    }
+
+    public override void onEnter() {
+        _elapsed = 0;
+    }
+
+    public override void onExit() {
     }
 
     public override void update(double deltaTime) {
