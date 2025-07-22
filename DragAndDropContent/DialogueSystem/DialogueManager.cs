@@ -4,14 +4,21 @@ namespace DialogueSystem {
     public class DialogueManager {
         [JsonInclude]
         [JsonPropertyName("nodes")]
-        private Dictionary<string, DialogueNode> _nodes = [];
+        private DialogueNode[] _nodes = [];
 
-        public void addNode(DialogueNode node) {
-            _nodes.Add(node.getId(), node);
+        public DialogueManager() {
         }
 
-        public DialogueNode getNode(string nodeKey) {
-            return _nodes[nodeKey];
+        public DialogueManager(int size) {
+            _nodes = new DialogueNode[size];
+        }
+
+        public void setNode(int id, DialogueNode node) {
+            _nodes[id] = node;
+        }
+
+        public DialogueNode getNode(int id) {
+            return _nodes[id];
         }
     }
 }

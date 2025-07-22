@@ -1,73 +1,104 @@
 using System.Text.Json.Serialization;
 
+// JSON can have additional identifier info that won't be parsed and mapped for human readability.
 namespace DialogueSystem {
     [JsonPolymorphic(TypeDiscriminatorPropertyName = "node_type")]
     [JsonDerivedType(typeof(TextNode), typeDiscriminator: "text")]
     [JsonDerivedType(typeof(QuestionNode), typeDiscriminator: "question")]
+    [JsonDerivedType(typeof(RpcNode), typeDiscriminator: "rpc")]
     public abstract class DialogueNode {
-        [JsonInclude]
-        [JsonPropertyName("id")]
-        private string _id = "";
-        [JsonInclude]
-        [JsonPropertyName("text_id")]
-        private string _textId = "";
-        [JsonInclude]
-        [JsonPropertyName("side_effect")]
-        private Dictionary<string, string>? _sideEffect;
-
-        public DialogueNode() {
-        }
-
-        public DialogueNode(string id, string text_id, Dictionary<string, string>? side_effect = null) {
-            _id = id;
-            _textId = text_id;
-            _sideEffect = side_effect;
-        }
-
-        public string getId() {
-            return _id;
-        }
-
-        public string getTextId() {
-            return _textId;
-        }
-
-        public Dictionary<string, string>? getSideEffect() {
-            return _sideEffect;
-        }
     }
 
-    public class TextNode : DialogueNode {
+    public class TextNode : DialogueNode, HasText, HasNextNode {
         [JsonInclude]
         [JsonPropertyName("next_node")]
-        private string _nextNode = ""; // Use -1 to terminate the dialogue chain
+        private int _nextNode; // Use -1 to terminate the dialogue chain
+        [JsonInclude]
+        [JsonPropertyName("character_id")]
+        private int _characterId;
+        [JsonInclude]
+        [JsonPropertyName("text_id")]
+        private int _textId;
 
         public TextNode() {
         }
 
-        public TextNode(string id, string text_id, string next_node, Dictionary<string, string>? side_effect = null) : base(id, text_id, side_effect) {
+        public TextNode(int text_id, int next_node, int character_id) {
             _nextNode = next_node;
+            _characterId = character_id;
+            _textId = text_id;
         }
 
-        public string getNextNode() {
+        public int getNextNode() {
             return _nextNode;
+        }
+
+        public int getCharacterId() {
+            return _characterId;
+        }
+
+        public int getTextId() {
+            return _textId;
         }
     }
 
-    public class QuestionNode : DialogueNode {
+    public class QuestionNode : DialogueNode, HasText {
         [JsonInclude]
-        [JsonPropertyName("answers")]
-        private string[] _answers = [];
+        [JsonPropertyName("answer_nodes")]
+        private int[] _answerNodes = [];
+        [JsonInclude]
+        [JsonPropertyName("text_id")]
+        private int _textId;
 
         public QuestionNode() {
         }
 
-        public QuestionNode(string id, string text_id, string[] answers, Dictionary<string, string>? side_effect = null) : base(id, text_id, side_effect) {
-            _answers = answers;
+        public QuestionNode(int text_id, int[] answer_nodes) {
+            _answerNodes = answer_nodes;
+            _textId = text_id;
         }
 
-        public string[] getAnswers() {
-            return _answers;
+        public int[] getAnswers() {
+            return _answerNodes;
         }
+
+        public int getTextId() {
+            return _textId;
+        }
+    }
+
+    public class RpcNode : DialogueNode, HasNextNode {
+        [JsonInclude]
+        [JsonPropertyName("next_node")]
+        private int _nextNode; // Use -1 to terminate the dialogue chain
+        [JsonInclude]
+        [JsonPropertyName("parameters")]
+        private string[] _parameters = [];
+
+        public RpcNode() {
+        }
+
+        public RpcNode(int next_node, string[] parameters) {
+            _nextNode = next_node;
+            _parameters = parameters;
+        }
+
+        public int getNextNode() {
+            return _nextNode;
+        }
+    }
+
+    public class ConditionalNode : DialogueNode, HasNextNode {
+        public int getNextNode() {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface HasNextNode {
+        public int getNextNode();
+    }
+
+    public interface HasText {
+        public int getTextId();
     }
 }

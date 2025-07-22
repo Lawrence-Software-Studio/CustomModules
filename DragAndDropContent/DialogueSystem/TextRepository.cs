@@ -4,14 +4,21 @@ namespace DialogueSystem {
     public class TextRepository {
         [JsonInclude]
         [JsonPropertyName("texts")]
-        private Dictionary<string, DialogueText> _texts = [];
+        private DialogueText[] _texts = [];
 
-        public void addText(DialogueText text) {
-            _texts.Add(text.getId(), text);
+        public TextRepository() {
         }
 
-        public string getText(string textKey) {
-            return _texts[textKey].getText();
+        public TextRepository(int size) {
+            _texts = new DialogueText[size];
+        }
+
+        public void setText(int id, DialogueText text) {
+            _texts[id] = text;
+        }
+
+        public string getText(int id) {
+            return _texts[id].getText();
         }
     }
 }

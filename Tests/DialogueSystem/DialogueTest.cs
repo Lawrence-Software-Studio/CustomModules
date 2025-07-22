@@ -36,12 +36,12 @@ public class DialogueTest {
         dialogueManager.addNode(nodeSix);
 
         TextRepository repository = new TextRepository();
-        repository.addText(one);
-        repository.addText(two);
-        repository.addText(three);
-        repository.addText(four);
-        repository.addText(five);
-        repository.addText(six);
+        repository.setText(one);
+        repository.setText(two);
+        repository.setText(three);
+        repository.setText(four);
+        repository.setText(five);
+        repository.setText(six);
 
         iterateOverDialogues(dialogueManager, repository);
 
