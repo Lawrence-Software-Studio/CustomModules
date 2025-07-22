@@ -1,53 +1,43 @@
 {
-    "nodes": {
-        "1": {
+    "nodes": [
+        {
             "node_type": "text",
-            "next_node": "2",
-            "id": "1",
-            "text_id": "1",
-            "side_effect": null
+            "next_node": 1,
+            "character_id": 0,
+            "text_id": 0
         },
-        "2": {
+        {
             "node_type": "question",
-            "answers": [
-                "3",
-                "4",
-                "5"
+            "answer_nodes": [
+                2,
+                3,
+                4
             ],
-            "id": "2",
-            "text_id": "2",
-            "side_effect": null
+            "text_id": 1
         },
-        "3": {
+        {
             "node_type": "text",
-            "next_node": "6",
-            "id": "3",
-            "text_id": "3",
-            "side_effect": null
+            "next_node": 5,
+            "character_id": 1,
+            "text_id": 2
         },
-        "4": {
+        {
             "node_type": "text",
-            "next_node": "6",
-            "id": "4",
-            "text_id": "4",
-            "side_effect": null
+            "next_node": 5,
+            "character_id": 1,
+            "text_id": 3
         },
-        "5": {
+        {
             "node_type": "text",
-            "next_node": "6",
-            "id": "5",
-            "text_id": "5",
-            "side_effect": null
+            "next_node": 5,
+            "character_id": 1,
+            "text_id": 4
         },
-        "6": {
+        {
             "node_type": "text",
-            "next_node": "-1",
-            "id": "6",
-            "text_id": "6",
-            "side_effect": {
-                "process_id": 1,
-                "message": "helloworld"
-            }
+            "next_node": -1,
+            "character_id": 1,
+            "text_id": 5
         }
-    }
+    ]
 }
