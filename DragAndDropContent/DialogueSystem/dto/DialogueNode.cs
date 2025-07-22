@@ -6,6 +6,7 @@ namespace DialogueSystem {
     [JsonDerivedType(typeof(TextNode), typeDiscriminator: "text")]
     [JsonDerivedType(typeof(QuestionNode), typeDiscriminator: "question")]
     [JsonDerivedType(typeof(RpcNode), typeDiscriminator: "rpc")]
+    [JsonDerivedType(typeof(ConditionNode), typeDiscriminator: "condition")]
     public abstract class DialogueNode {
     }
 
@@ -67,7 +68,7 @@ namespace DialogueSystem {
         }
     }
 
-    public class RpcNode : DialogueNode, HasNextNode {
+    public class RpcNode : DialogueNode, HasNextNode, HasParameters {
         [JsonInclude]
         [JsonPropertyName("next_node")]
         private int _nextNode; // Use -1 to terminate the dialogue chain
@@ -86,11 +87,26 @@ namespace DialogueSystem {
         public int getNextNode() {
             return _nextNode;
         }
+
+        public string[] getParameters() {
+            return _parameters;
+        }
     }
 
-    public class ConditionalNode : DialogueNode, HasNextNode {
+    public class ConditionNode : DialogueNode, HasNextNode, HasParameters {
+        [JsonInclude]
+        [JsonPropertyName("next_node")]
+        private int _nextNode; // Use -1 to terminate the dialogue chain
+        [JsonInclude]
+        [JsonPropertyName("parameters")]
+        private string[] _parameters = [];
+
         public int getNextNode() {
-            throw new NotImplementedException();
+            return _nextNode;
+        }
+
+        public string[] getParameters() {
+            return _parameters;
         }
     }
 
@@ -100,5 +116,28 @@ namespace DialogueSystem {
 
     public interface HasText {
         public int getTextId();
+    }
+
+    /*
+        Index       value
+        0           process ID to determine how to parse other values
+        1           param 1
+        2           param 2
+        ...
+
+        Example:
+        0           greater_than
+        1           key_1
+        2           key_2
+        3           true_node
+        4           false_node
+        if (npc_values[key_1] > npc_values[key_2]) {
+            return true_node
+        } else {
+            return false_node
+        }
+    */
+    public interface HasParameters {
+        public string[] getParameters();
     }
 }

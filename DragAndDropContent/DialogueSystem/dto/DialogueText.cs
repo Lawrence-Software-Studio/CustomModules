@@ -4,7 +4,7 @@ namespace DialogueSystem {
     public class DialogueText {
         [JsonInclude]
         [JsonPropertyName("id")]
-        private string _id = "";
+        private int _id;
         [JsonInclude]
         [JsonPropertyName("text")]
         private string _text = "";
@@ -12,12 +12,12 @@ namespace DialogueSystem {
         public DialogueText() {
         }
 
-        public DialogueText(string id, string text) {
+        public DialogueText(int id, string text) {
             _id = id;
             _text = text;
         }
 
-        public string getId() {
+        public int getId() {
             return _id;
         }
 
