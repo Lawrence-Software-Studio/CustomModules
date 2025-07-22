@@ -11,11 +11,15 @@ namespace DialogueSystem {
         [JsonInclude]
         [JsonPropertyName("text_id")]
         public readonly int TextId;
+        [JsonInclude]
+        [JsonPropertyName("side_effect")]
+        public readonly Dictionary<string, object>? SideEffect;
 
         [JsonConstructor]
-        public DialogueNode(int id, int text_id) {
+        public DialogueNode(int id, int text_id, Dictionary<string, object>? side_effect = null) {
             Id = id;
             TextId = text_id;
+            SideEffect = side_effect;
         }
     }
 
@@ -24,7 +28,7 @@ namespace DialogueSystem {
         [JsonPropertyName("next_node")]
         public readonly int NextNode; // Use -1 to terminate the dialogue chain
 
-        public TextNode(int id, int text_id, int next_node) : base(id, text_id) {
+        public TextNode(int id, int text_id, int next_node, Dictionary<string, object>? side_effect = null) : base(id, text_id, side_effect) {
             NextNode = next_node;
         }
     }
@@ -34,7 +38,7 @@ namespace DialogueSystem {
         [JsonPropertyName("answers")]
         public int[] Answers = [];
 
-        public QuestionNode(int id, int text_id, int[] answers) : base(id, text_id) {
+        public QuestionNode(int id, int text_id, int[] answers, Dictionary<string, object>? side_effect = null) : base(id, text_id, side_effect) {
             Answers = answers;
         }
     }

@@ -18,7 +18,10 @@ public class DialogueTest {
         DialogueNode nodeThree = new TextNode(3, 3, 6);
         DialogueNode nodeFour = new TextNode(4, 4, 6);
         DialogueNode nodeFive = new TextNode(5, 5, 6);
-        DialogueNode nodeSix = new TextNode(6, 6, -1);
+        DialogueNode nodeSix = new TextNode(6, 6, -1, new Dictionary<string, object> {
+            {"process_id", 1},
+            {"message", "helloworld"}
+        });
 
         Console.WriteLine(JsonSerializer.Serialize(nodeOne));
         Console.WriteLine(JsonSerializer.Serialize(nodeTwo));
@@ -64,6 +67,12 @@ public class DialogueTest {
                     choice = answer.NextNode;
                 }
                 current = choice;
+            }
+
+            if (node.SideEffect != null) {
+                if ((int)node.SideEffect["process_id"] == 1) {
+                    Console.WriteLine(node.SideEffect["message"]);
+                }
             }
         }
 
