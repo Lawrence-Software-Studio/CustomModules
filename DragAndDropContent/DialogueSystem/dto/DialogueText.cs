@@ -3,12 +3,12 @@ using System.Text.Json.Serialization;
 namespace DialogueSystem {
     public class DialogueText {
         [JsonPropertyName("id")]
-        public readonly int Id;
+        public readonly string Id;
         [JsonPropertyName("text")]
         public readonly string Text;
 
         [JsonConstructor]
-        public DialogueText(int id, string text) {
+        public DialogueText(string id, string text) {
             Id = id;
             Text = text;
         }

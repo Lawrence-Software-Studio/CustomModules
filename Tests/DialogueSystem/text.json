@@ -2,48 +2,48 @@
     "nodes": {
         "1": {
             "node_type": "text",
-            "next_node": 2,
-            "id": 1,
-            "text_id": 1,
+            "next_node": "2",
+            "id": "1",
+            "text_id": "1",
             "side_effect": null
         },
         "2": {
             "node_type": "question",
             "answers": [
-                3,
-                4,
-                5
+                "3",
+                "4",
+                "5"
             ],
-            "id": 2,
-            "text_id": 2,
+            "id": "2",
+            "text_id": "2",
             "side_effect": null
         },
         "3": {
             "node_type": "text",
-            "next_node": 6,
-            "id": 3,
-            "text_id": 3,
+            "next_node": "6",
+            "id": "3",
+            "text_id": "3",
             "side_effect": null
         },
         "4": {
             "node_type": "text",
-            "next_node": 6,
-            "id": 4,
-            "text_id": 4,
+            "next_node": "6",
+            "id": "4",
+            "text_id": "4",
             "side_effect": null
         },
         "5": {
             "node_type": "text",
-            "next_node": 6,
-            "id": 5,
-            "text_id": 5,
+            "next_node": "6",
+            "id": "5",
+            "text_id": "5",
             "side_effect": null
         },
         "6": {
             "node_type": "text",
-            "next_node": -1,
-            "id": 6,
-            "text_id": 6,
+            "next_node": "-1",
+            "id": "6",
+            "text_id": "6",
             "side_effect": {
                 "process_id": 1,
                 "message": "helloworld"

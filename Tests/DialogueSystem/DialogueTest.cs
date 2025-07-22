@@ -3,23 +3,23 @@ using DialogueSystem;
 
 public class DialogueTest {
     public static void main() {
-        DialogueText one = new DialogueText(1, "Hello");
-        DialogueText two = new DialogueText(2, "How are you?");
-        DialogueText three = new DialogueText(3, "I'm fine.");
-        DialogueText four = new DialogueText(4, "I could be better.");
-        DialogueText five = new DialogueText(5, "I'm ill.");
-        DialogueText six = new DialogueText(6, "I see.");
+        DialogueText one = new DialogueText("1", "Hello");
+        DialogueText two = new DialogueText("2", "How are you?");
+        DialogueText three = new DialogueText("3", "I'm fine.");
+        DialogueText four = new DialogueText("4", "I could be better.");
+        DialogueText five = new DialogueText("5", "I'm ill.");
+        DialogueText six = new DialogueText("6", "I see.");
 
-        DialogueNode nodeOne = new TextNode(1, 1, 2);
-        DialogueNode nodeTwo = new QuestionNode(2, 2, [
-            3, 4, 5
+        DialogueNode nodeOne = new TextNode("1", "1", "2");
+        DialogueNode nodeTwo = new QuestionNode("2", "2", [
+            "3", "4", "5"
         ]);
 
-        DialogueNode nodeThree = new TextNode(3, 3, 6);
-        DialogueNode nodeFour = new TextNode(4, 4, 6);
-        DialogueNode nodeFive = new TextNode(5, 5, 6);
-        DialogueNode nodeSix = new TextNode(6, 6, -1, new Dictionary<string, object> {
-            {"process_id", 1},
+        DialogueNode nodeThree = new TextNode("3", "3", "6");
+        DialogueNode nodeFour = new TextNode("4", "4", "6");
+        DialogueNode nodeFive = new TextNode("5", "5", "6");
+        DialogueNode nodeSix = new TextNode("6", "6", "-1", new Dictionary<string, string> {
+            {"process_id", "1"},
             {"message", "helloworld"}
         });
 
@@ -43,9 +43,22 @@ public class DialogueTest {
         repository.addText(five);
         repository.addText(six);
 
+        iterateOverDialogues(dialogueManager, repository);
 
-        int current = 1;
-        while (current != -1) {
+        string json = JsonSerializer.Serialize(dialogueManager);
+        Console.WriteLine($"Dialogue manager json: \n {json}");
+        string json2 = JsonSerializer.Serialize(repository);
+        Console.WriteLine($"Repository json: \n {json2}");
+
+        DialogueManager dm2 = JsonSerializer.Deserialize<DialogueManager>(json);
+        TextRepository r2 = JsonSerializer.Deserialize<TextRepository>(json2);
+
+        iterateOverDialogues(dm2, r2);
+    }
+
+    public static void iterateOverDialogues(DialogueManager dialogueManager, TextRepository repository) {
+        string current = "1";
+        while (current != "-1") {
             DialogueNode node = dialogueManager.getNode(current);
 
             if (node is TextNode t) {
@@ -54,13 +67,13 @@ public class DialogueTest {
             } else if (node is QuestionNode q) {
                 Console.WriteLine(repository.getText(q.TextId));
 
-                int choice = -1;
+                string choice = "-1";
 
-                foreach (int i in q.Answers) {
+                foreach (string i in q.Answers) {
                     TextNode answer = (TextNode)dialogueManager.getNode(i);
                     Console.WriteLine(repository.getText(answer.TextId));
 
-                    if (choice != -1) {
+                    if (choice != "-1") {
                         continue;
                     }
 
@@ -70,12 +83,10 @@ public class DialogueTest {
             }
 
             if (node.SideEffect != null) {
-                if ((int)node.SideEffect["process_id"] == 1) {
+                if (node.SideEffect["process_id"] == "1") {
                     Console.WriteLine(node.SideEffect["message"]);
                 }
             }
         }
-
-        Console.WriteLine(JsonSerializer.Serialize(dialogueManager));
     }
 }

@@ -7,16 +7,19 @@ namespace DialogueSystem {
     public abstract class DialogueNode {
         [JsonInclude]
         [JsonPropertyName("id")]
-        public readonly int Id;
+        public string Id;
         [JsonInclude]
         [JsonPropertyName("text_id")]
-        public readonly int TextId;
+        public string TextId;
         [JsonInclude]
         [JsonPropertyName("side_effect")]
-        public readonly Dictionary<string, object>? SideEffect;
+        public Dictionary<string, string>? SideEffect;
 
-        [JsonConstructor]
-        public DialogueNode(int id, int text_id, Dictionary<string, object>? side_effect = null) {
+        public DialogueNode() {
+
+        }
+
+        public DialogueNode(string id, string text_id, Dictionary<string, string>? side_effect = null) {
             Id = id;
             TextId = text_id;
             SideEffect = side_effect;
@@ -26,9 +29,12 @@ namespace DialogueSystem {
     public class TextNode : DialogueNode {
         [JsonInclude]
         [JsonPropertyName("next_node")]
-        public readonly int NextNode; // Use -1 to terminate the dialogue chain
+        public string NextNode; // Use -1 to terminate the dialogue chain
 
-        public TextNode(int id, int text_id, int next_node, Dictionary<string, object>? side_effect = null) : base(id, text_id, side_effect) {
+        public TextNode() {
+        }
+
+        public TextNode(string id, string text_id, string next_node, Dictionary<string, string>? side_effect = null) : base(id, text_id, side_effect) {
             NextNode = next_node;
         }
     }
@@ -36,9 +42,13 @@ namespace DialogueSystem {
     public class QuestionNode : DialogueNode {
         [JsonInclude]
         [JsonPropertyName("answers")]
-        public int[] Answers = [];
+        public string[] Answers = [];
 
-        public QuestionNode(int id, int text_id, int[] answers, Dictionary<string, object>? side_effect = null) : base(id, text_id, side_effect) {
+        public QuestionNode() {
+
+        }
+
+        public QuestionNode(string id, string text_id, string[] answers, Dictionary<string, string>? side_effect = null) : base(id, text_id, side_effect) {
             Answers = answers;
         }
     }
