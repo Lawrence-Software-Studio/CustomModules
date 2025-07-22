@@ -7,49 +7,67 @@ namespace DialogueSystem {
     public abstract class DialogueNode {
         [JsonInclude]
         [JsonPropertyName("id")]
-        public string Id;
+        private string _id = "";
         [JsonInclude]
         [JsonPropertyName("text_id")]
-        public string TextId;
+        private string _textId = "";
         [JsonInclude]
         [JsonPropertyName("side_effect")]
-        public Dictionary<string, string>? SideEffect;
+        private Dictionary<string, string>? _sideEffect;
 
         public DialogueNode() {
-
         }
 
         public DialogueNode(string id, string text_id, Dictionary<string, string>? side_effect = null) {
-            Id = id;
-            TextId = text_id;
-            SideEffect = side_effect;
+            _id = id;
+            _textId = text_id;
+            _sideEffect = side_effect;
+        }
+
+        public string getId() {
+            return _id;
+        }
+
+        public string getTextId() {
+            return _textId;
+        }
+
+        public Dictionary<string, string>? getSideEffect() {
+            return _sideEffect;
         }
     }
 
     public class TextNode : DialogueNode {
         [JsonInclude]
         [JsonPropertyName("next_node")]
-        public string NextNode; // Use -1 to terminate the dialogue chain
+        private string _nextNode = ""; // Use -1 to terminate the dialogue chain
 
         public TextNode() {
         }
 
         public TextNode(string id, string text_id, string next_node, Dictionary<string, string>? side_effect = null) : base(id, text_id, side_effect) {
-            NextNode = next_node;
+            _nextNode = next_node;
+        }
+
+        public string getNextNode() {
+            return _nextNode;
         }
     }
 
     public class QuestionNode : DialogueNode {
         [JsonInclude]
         [JsonPropertyName("answers")]
-        public string[] Answers = [];
+        private string[] _answers = [];
 
         public QuestionNode() {
-
         }
 
         public QuestionNode(string id, string text_id, string[] answers, Dictionary<string, string>? side_effect = null) : base(id, text_id, side_effect) {
-            Answers = answers;
+            _answers = answers;
+        }
+
+        public string[] getAnswers() {
+            return _answers;
         }
     }
 }

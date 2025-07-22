@@ -2,15 +2,27 @@ using System.Text.Json.Serialization;
 
 namespace DialogueSystem {
     public class DialogueText {
+        [JsonInclude]
         [JsonPropertyName("id")]
-        public readonly string Id;
+        private string _id = "";
+        [JsonInclude]
         [JsonPropertyName("text")]
-        public readonly string Text;
+        private string _text = "";
 
-        [JsonConstructor]
+        public DialogueText() {
+        }
+
         public DialogueText(string id, string text) {
-            Id = id;
-            Text = text;
+            _id = id;
+            _text = text;
+        }
+
+        public string getId() {
+            return _id;
+        }
+
+        public string getText() {
+            return _text;
         }
     }
 }

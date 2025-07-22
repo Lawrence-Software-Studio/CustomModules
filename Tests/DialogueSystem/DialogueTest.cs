@@ -50,8 +50,8 @@ public class DialogueTest {
         string json2 = JsonSerializer.Serialize(repository);
         Console.WriteLine($"Repository json: \n {json2}");
 
-        DialogueManager dm2 = JsonSerializer.Deserialize<DialogueManager>(json);
-        TextRepository r2 = JsonSerializer.Deserialize<TextRepository>(json2);
+        DialogueManager dm2 = JsonSerializer.Deserialize<DialogueManager>(json) ?? new DialogueManager();
+        TextRepository r2 = JsonSerializer.Deserialize<TextRepository>(json2) ?? new TextRepository();
 
         iterateOverDialogues(dm2, r2);
     }
@@ -62,29 +62,29 @@ public class DialogueTest {
             DialogueNode node = dialogueManager.getNode(current);
 
             if (node is TextNode t) {
-                Console.WriteLine(repository.getText(t.TextId));
-                current = t.NextNode;
+                Console.WriteLine(repository.getText(t.getTextId()));
+                current = t.getNextNode();
             } else if (node is QuestionNode q) {
-                Console.WriteLine(repository.getText(q.TextId));
+                Console.WriteLine(repository.getText(q.getTextId()));
 
                 string choice = "-1";
 
-                foreach (string i in q.Answers) {
+                foreach (string i in q.getAnswers()) {
                     TextNode answer = (TextNode)dialogueManager.getNode(i);
-                    Console.WriteLine(repository.getText(answer.TextId));
+                    Console.WriteLine(repository.getText(answer.getTextId()));
 
                     if (choice != "-1") {
                         continue;
                     }
 
-                    choice = answer.NextNode;
+                    choice = answer.getNextNode();
                 }
                 current = choice;
             }
 
-            if (node.SideEffect != null) {
-                if (node.SideEffect["process_id"] == "1") {
-                    Console.WriteLine(node.SideEffect["message"]);
+            if (node.getSideEffect() != null) {
+                if (node.getSideEffect()?["process_id"] == "1") {
+                    Console.WriteLine(node.getSideEffect()?["message"]);
                 }
             }
         }
