@@ -136,6 +136,13 @@ namespace DialogueSystem {
         } else {
             return false_node
         }
+
+        Process ID      Process                 Example
+        0               equal                   [0, "salary", 100, 1, 2]
+        1               greater_than
+        2               greater_than_or_equal
+        3               less_than
+        4               less_than_or_equal
     */
     public interface HasParameters {
         public string[] getParameters();
